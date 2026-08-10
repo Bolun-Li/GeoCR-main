@@ -1,0 +1,93 @@
+# GeoCR-S object detector based on the YOLO11s backbone and detection head.
+# GeoCR modules are injected after backbone P3/P4/P5 by DetectionModel.
+
+# Model parameters
+nc: 80
+scale: s
+scales:
+  # [depth, width, max_channels]
+  n: [0.50, 0.25, 1024]
+  s: [0.50, 0.50, 1024]
+  m: [0.50, 1.00, 512]
+  l: [1.00, 1.00, 512]
+  x: [1.00, 1.50, 512]
+
+# GeoCR-specific configuration
+geocr:
+  enabled: true
+  levels: [3, 4, 5]
+  embedding_dim: 1024
+  feature_layers:
+    3: 4  # P3 feature after backbone layer 4
+    4: 6  # P4 feature after backbone layer 6
+    5: 8  # P5 feature after backbone layer 8
+
+  # Frequency-Decoupled Feature Calibration
+  ffc:
+    use_frequency: true
+    use_fd: true
+    dual_affine: true
+    use_beta: true
+    use_modulation: true
+    use_weighted_fusion: true
+    residual: true
+    residual_scale_init: 1.0e-6
+    fd_kernel: 3
+    gate_reduction: 4
+    gamma_scale: 1.0
+    beta_scale: 1.0
+    rc_kernel: 3
+    fcd_eps: 1.0e-6
+    fcd_loss_gain: 1.0
+
+  # Geometric Difficulty Rebalancing
+  gdr:
+    enabled: true
+    warmup_epochs: 30
+    update_freq_front: 3
+    update_freq_back: 2
+    switch_epoch: 100
+    mu: 0.7
+    f_min: 0.7
+    f_max: 3.0
+    eps: 1.0e-6
+    count_weight_start: 0.8
+    count_transition_epochs: 100
+    geometry_weight: 0.5
+  gdr_curriculum_cfg: ultralytics/cfg/geocr/gdr_curriculum.yaml
+
+# YOLO11 backbone
+backbone:
+  # [from, repeats, module, args]
+  - [-1, 1, Conv, [64, 3, 2]] # 0-P1/2
+  - [-1, 1, Conv, [128, 3, 2]] # 1-P2/4
+  - [-1, 2, C3k2, [256, False, 0.25]]
+  - [-1, 1, Conv, [256, 3, 2]] # 3-P3/8
+  - [-1, 2, C3k2, [512, False, 0.25]] # 4-P3/8: GeoCR P3 insertion
+  - [-1, 1, Conv, [512, 3, 2]] # 5-P4/16
+  - [-1, 2, C3k2, [512, True]] # 6-P4/16: GeoCR P4 insertion
+  - [-1, 1, Conv, [1024, 3, 2]] # 7-P5/32
+  - [-1, 2, C3k2, [1024, True]] # 8-P5/32: GeoCR P5 insertion
+  - [-1, 1, SPPF, [1024, 5]] # 9
+  - [-1, 2, C2PSA, [1024]] # 10
+
+# YOLO11 detection head
+head:
+  - [-1, 1, nn.Upsample, [None, 2, "nearest"]]
+  - [[-1, 6], 1, Concat, [1]]
+  - [-1, 2, C3k2, [512, False]] # 13
+
+  - [-1, 1, nn.Upsample, [None, 2, "nearest"]]
+  - [[-1, 4], 1, Concat, [1]]
+  - [-1, 2, C3k2, [256, False]] # 16-P3/8
+
+  - [-1, 1, Conv, [256, 3, 2]]
+  - [[-1, 13], 1, Concat, [1]]
+  - [-1, 2, C3k2, [512, False]] # 19-P4/16
+
+  - [-1, 1, Conv, [512, 3, 2]]
+  - [[-1, 10], 1, Concat, [1]]
+  - [-1, 2, C3k2, [1024, True]] # 22-P5/32
+
+  - [[16, 19, 22], 1, Detect, [nc]]
+

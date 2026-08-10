@@ -1,0 +1,28 @@
+# URPC2019 dataset configuration. Paths are resolved from the repository root.
+path: /home/user03/lbl/Dataset/URPC2019
+train: train/images
+val: valid/images
+test: test/images
+
+names:
+  0: echinus
+  1: holothurian
+  2: scallop
+  3: starfish
+
+geocr:
+  cpe:
+    embedding_dim: 1024
+    index: /home/user03/lbl/Dataset/Prompt/Text/URPC2019/urpc_hierarchical_prompts.jsonl
+    p3_text: /home/user03/lbl/Dataset/Prompt/Text/URPC2019/emb_p3.npy
+    p4_text: /home/user03/lbl/Dataset/Prompt/Text/URPC2019/emb_p4.npy
+    p5_text: /home/user03/lbl/Dataset/Prompt/Text/URPC2019/emb_p5.npy
+    local_visual: /home/user03/lbl/Dataset/Prompt/Image/URPC2019/v_diff_embeddings.npy
+    global_visual: /home/user03/lbl/Dataset/Prompt/Image/URPC2019/global_embeddings.npy
+
+roboflow:
+  workspace: underwater-fish-f6cri
+  project: urpc2019-nrbk1
+  version: 3
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/underwater-fish-f6cri/urpc2019-nrbk1/dataset/3

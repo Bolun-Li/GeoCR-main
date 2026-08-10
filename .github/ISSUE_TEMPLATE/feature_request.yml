@@ -1,0 +1,25 @@
+name: Feature request
+description: Propose a focused improvement to GeoCR
+title: "[Feature]: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation
+      description: What research or engineering problem would this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Describe the desired behavior and any alternatives considered.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Reproducibility considerations
+      description: Note any dataset, checkpoint, dependency, compute, or metric implications.
+

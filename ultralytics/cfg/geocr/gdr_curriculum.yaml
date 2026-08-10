@@ -1,0 +1,40 @@
+# Relation-aware curriculum inside Geometric Difficulty Rebalancing (GDR)
+enabled: true
+num_target_classes: 4
+
+# [warm-up end, middle-stage end, final epoch]
+stage_end_epochs: [30, 150, 300]
+
+# [recall-oriented foreground, foreground-confusion, hard-background]
+branch_ratios:
+  - [0.00, 0.00, 0.00]
+  - [0.60, 0.30, 0.10]
+  - [0.05, 0.15, 0.80]
+
+max_paste_per_image: 10
+max_recall_paste_per_image: 2
+apply_prob: 1.0
+
+min_patch_size: 8
+paste_scale_choices: [0.35, 0.5, 0.7, 1.0]
+paste_scale_probs: [0.4, 0.3, 0.2, 0.1]
+avoid_iou_thr: 0.2
+near_gt_bias: true
+
+use_light_blur: true
+use_low_contrast: true
+use_haze_like: true
+use_alpha_blend: true
+alpha_range: [0.7, 0.9]
+
+bank_size_per_class: 800
+bank_target_short_side: 128
+conf_fp_bg_min: 0.6
+
+# Detection/GT matching for the Class Similarity Graph
+graph_conf_threshold: 0.25
+graph_nms_iou_threshold: 0.6
+graph_match_iou_threshold: 0.5
+
+ema_beta: 0.995
+eps: 1.0e-6

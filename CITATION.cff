@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use GeoCR in your research, please cite the project using the metadata below."
+title: "GeoCR: Geometric Calibration and Rebalancing for Long-Tailed Underwater Object Detection"
+type: software
+authors:
+  - name: "GeoCR contributors"
+version: 0.1.0
+date-released: 2026-08-10
+license: AGPL-3.0-or-later
+

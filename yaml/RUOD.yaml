@@ -1,0 +1,27 @@
+# RUOD dataset configuration. Paths are resolved from the repository root.
+path: /home/user03/lbl/Dataset/RUOD
+train: train/images
+val: test/images
+test: test/images
+
+names:
+  0: holothurian
+  1: echinus
+  2: scallop
+  3: starfish
+  4: fish
+  5: corals
+  6: diver
+  7: cuttlefish
+  8: turtle
+  9: jellyfish
+
+geocr:
+  cpe:
+    embedding_dim: 1024
+    index: /home/user03/lbl/Dataset/Prompt/Text/RUOD/ruod_hierarchical_prompts.jsonl
+    p3_text: /home/user03/lbl/Dataset/Prompt/Text/RUOD/emb_p3.npy
+    p4_text: /home/user03/lbl/Dataset/Prompt/Text/RUOD/emb_p4.npy
+    p5_text: /home/user03/lbl/Dataset/Prompt/Text/RUOD/emb_p5.npy
+    local_visual: /home/user03/lbl/Dataset/Prompt/Image/RUOD/v_diff_embeddings.npy
+    global_visual: /home/user03/lbl/Dataset/Prompt/Image/RUOD/global_embeddings.npy

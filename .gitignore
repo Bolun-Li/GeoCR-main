@@ -1,0 +1,58 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+*.so
+.Python
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Virtual environments and packaging
+.venv/
+venv/
+env/
+.conda/
+build/
+dist/
+*.egg-info/
+
+# Editors and operating systems
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Training and experiment outputs
+/runs/
+/wandb/
+/mlruns/
+/logs/
+/datasets/*
+!/datasets/README.md
+/priors/*
+!/priors/README.md
+
+# Model and generated data artifacts
+/weights/*
+!/weights/README.md
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.engine
+*.tflite
+*.npy
+*.npz
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+*.local.yaml
+*.local.yml

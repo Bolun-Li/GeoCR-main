@@ -1,0 +1,21 @@
+# DUO dataset configuration. The test split is also used for validation.
+path: /home/user03/lbl/Dataset/DUO
+train: train/images
+val: test/images
+test: test/images
+
+names:
+  0: holothurian
+  1: echinus
+  2: scallop
+  3: starfish
+
+geocr:
+  cpe:
+    embedding_dim: 1024
+    index: /home/user03/lbl/Dataset/Prompt/Text/DUO/duo_hierarchical_prompts.jsonl
+    p3_text: /home/user03/lbl/Dataset/Prompt/Text/DUO/emb_p3.npy
+    p4_text: /home/user03/lbl/Dataset/Prompt/Text/DUO/emb_p4.npy
+    p5_text: /home/user03/lbl/Dataset/Prompt/Text/DUO/emb_p5.npy
+    local_visual: /home/user03/lbl/Dataset/Prompt/Image/DUO/v_diff_embeddings.npy
+    global_visual: /home/user03/lbl/Dataset/Prompt/Image/DUO/global_embeddings.npy
